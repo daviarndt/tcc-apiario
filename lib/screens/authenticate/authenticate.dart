@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:tcc_apiario/screens/authenticate/register.dart';
+import 'package:tcc_apiario/screens/authenticate/sign_in.dart';
 
-class Authenticatee extends StatefulWidget {
+
+class Authenticate extends StatefulWidget {
   @override
-  _AuthenticateeState createState() => _AuthenticateeState();
+  _AuthenticateState createState() => _AuthenticateState();
 }
 
-class _AuthenticateeState extends State<Authenticatee> {
+class _AuthenticateState extends State<Authenticate> {
+
+  bool showSignIn = true;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Authenticate'),
-    );
+    if (showSignIn) {
+      return SignIn(toggleView: toggleView);
+    } else {
+      return Register(toggleView: toggleView);
+    }
+  }
+
+  void toggleView() {
+    setState(() {
+      showSignIn = !showSignIn;
+    });
   }
 }
