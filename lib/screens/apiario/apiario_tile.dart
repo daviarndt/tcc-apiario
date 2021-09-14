@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/apiario.dart';
+import 'package:tcc_apiario/models/user_custom.dart';
+import 'package:tcc_apiario/services/database.dart';
 import 'form_apiario.dart';
 
 class ApiarioTile extends StatelessWidget {
@@ -9,6 +12,8 @@ class ApiarioTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserCustom>(context);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -49,14 +54,10 @@ class ApiarioTile extends StatelessWidget {
                                             }),
                                         TextButton(
                                             child: Text('Sim'),
-                                            // TO DO
                                             onPressed: () {
-                                              // apiarios.remove(apiario);
-                                              // DatabaseService(uid: user.uid)
-                                              //     .removeApiario(
-                                              //     apiario.keyApiario);
-                                              // Navigator.of(context).pop();
-                                              // Navigator.of(context).pop();
+                                              DatabaseService(uid: user.uid).removeApiario(apiario.keyApiario);
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
                                             })
                                       ],
                                     );

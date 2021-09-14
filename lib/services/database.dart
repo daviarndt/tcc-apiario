@@ -26,21 +26,26 @@ class DatabaseService {
     });
   }
 
-  List<Apiario> _apiarioListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return Apiario(
-        nome: doc.data()['nome'],
-        logradouro: doc.data()['logradouro'],
-        latitude: doc.data()['latitude'],
-        longitude: doc.data()['longitude'],
-          dataAtualizacao: doc.data()['dataAtualizacao']
-      );
-    }).toList();
+  Future removeApiario(String doc) async {
+    return await apiarioCollection.doc(doc).delete();
   }
 
   Stream<List<Apiario>> get apiarios {
     return apiarioCollection.snapshots()
       .map(_apiarioListFromSnapshot);
+  }
+
+  List<Apiario> _apiarioListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Apiario(
+          keyApiario: doc.id,
+          nome: doc.data()['nome'],
+          logradouro: doc.data()['logradouro'],
+          latitude: doc.data()['latitude'],
+          longitude: doc.data()['longitude'],
+          dataAtualizacao: doc.data()['dataAtualizacao']
+      );
+    }).toList();
   }
 
 }
