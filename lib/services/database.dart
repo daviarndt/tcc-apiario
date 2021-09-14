@@ -16,8 +16,8 @@ class DatabaseService {
     });
   }
 
-  Future createDatabaseForNewApiario(String nome, String logradouro, String latitude, String longitude, DateTime dataAtualizacao) async {
-    return await apiarioCollection.doc(uid).set({
+  Future addApiario(String nome, String logradouro, String latitude, String longitude, Timestamp dataAtualizacao) async {
+    return await apiarioCollection.add({
       'nome': nome,
       'logradouro': logradouro,
       'latitude': latitude,
@@ -33,7 +33,7 @@ class DatabaseService {
         logradouro: doc.data()['logradouro'],
         latitude: doc.data()['latitude'],
         longitude: doc.data()['longitude'],
-          dataAtualizacao: doc.data()['dataAtualizacao'].toString()
+          dataAtualizacao: doc.data()['dataAtualizacao']
       );
     }).toList();
   }

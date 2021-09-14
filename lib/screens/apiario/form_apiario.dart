@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/apiario.dart';
@@ -20,7 +21,6 @@ class _FormApiarioState extends State<FormApiario> {
   String logradouro = '';
   String latitude = '';
   String longitude = '';
-  DateTime dataAtualizacao = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class _FormApiarioState extends State<FormApiario> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService(uid: user.uid).createDatabaseForNewApiario(nome, logradouro, latitude, longitude, DateTime.now());
+                      await DatabaseService(uid: user.uid).addApiario(nome, logradouro, latitude, longitude, Timestamp.now());
                       Navigator.pop(context);
                     }
                   },

@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Apiario {
 
   String nome;
   String logradouro;
   String latitude;
   String longitude;
-  String dataAtualizacao;
+  Timestamp dataAtualizacao;
 
   Apiario({
     required this.nome,
