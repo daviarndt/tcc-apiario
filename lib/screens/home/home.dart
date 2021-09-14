@@ -1,23 +1,23 @@
 import 'dart:ffi';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tcc_apiario/models/apiario.dart';
+import 'package:tcc_apiario/screens/apiario/form_apiario.dart';
 import 'package:tcc_apiario/services/auth.dart';
 import 'package:tcc_apiario/services/database.dart';
 
-import 'usuario_list.dart';
+import 'apiario_list.dart';
 
 class Home extends StatelessWidget {
-
   final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: StreamProvider<QuerySnapshot?>.value(
+      child: StreamProvider<List<Apiario>?>.value(
         initialData: null,
-        value: DatabaseService(uid: '').usuarios,
+        value: DatabaseService(uid: '').apiarios,
         child: Scaffold(
           backgroundColor: Colors.brown[50],
           appBar: AppBar(
@@ -34,7 +34,17 @@ class Home extends StatelessWidget {
               ),
             ],
           ),
-          body: UsuarioList(),
+          body: ApiarioList(),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => FormApiario(),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

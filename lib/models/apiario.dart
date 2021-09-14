@@ -4,14 +4,14 @@ class Apiario {
   String logradouro;
   String latitude;
   String longitude;
-  DateTime dataCriacao;
+  String dataAtualizacao;
 
   Apiario({
     required this.nome,
     required this.logradouro,
     required this.latitude,
     required this.longitude,
-    required this.dataCriacao
+    required this.dataAtualizacao
   });
 
 }
