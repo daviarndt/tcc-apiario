@@ -16,13 +16,14 @@ class DatabaseService {
     });
   }
 
-  Future addApiario(String nome, String logradouro, String latitude, String longitude, Timestamp dataAtualizacao) async {
+  Future addApiario(String nome, String logradouro, String latitude, String longitude, Timestamp dataAtualizacao, String criadoPor) async {
     return await apiarioCollection.add({
       'nome': nome,
       'logradouro': logradouro,
       'latitude': latitude,
       'longitude': longitude,
-      'dataAtualizacao': dataAtualizacao
+      'dataAtualizacao': dataAtualizacao,
+      'criadoPor': criadoPor
     });
   }
 
@@ -43,7 +44,8 @@ class DatabaseService {
           logradouro: doc.data()['logradouro'],
           latitude: doc.data()['latitude'],
           longitude: doc.data()['longitude'],
-          dataAtualizacao: doc.data()['dataAtualizacao']
+          dataAtualizacao: doc.data()['dataAtualizacao'],
+          criadoPor: doc.data()['criadoPor']
       );
     }).toList();
   }

@@ -103,7 +103,7 @@ class _FormApiarioState extends State<FormApiario> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService(uid: user.uid).addApiario(nome, logradouro, latitude, longitude, Timestamp.now());
+                      await DatabaseService(uid: user.uid).addApiario(nome, logradouro, latitude, longitude, Timestamp.now(), user.uid);
                       Navigator.pop(context);
                     }
                   },

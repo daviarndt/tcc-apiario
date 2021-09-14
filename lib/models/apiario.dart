@@ -8,6 +8,7 @@ class Apiario {
   String latitude;
   String longitude;
   Timestamp dataAtualizacao;
+  String criadoPor;
 
   Apiario({
     required this.keyApiario,
@@ -15,7 +16,8 @@ class Apiario {
     required this.logradouro,
     required this.latitude,
     required this.longitude,
-    required this.dataAtualizacao
+    required this.dataAtualizacao,
+    required this.criadoPor
   });
 
 }
