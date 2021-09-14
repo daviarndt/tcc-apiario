@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/apiario.dart';
+import 'package:tcc_apiario/screens/apiario/apiario_tile.dart';
 
 class ApiarioList extends StatefulWidget {
   @override
@@ -13,14 +14,11 @@ class _ApiarioListState extends State<ApiarioList> {
 
     final apiarios = Provider.of<List<Apiario>?>(context) ?? [];
 
-    apiarios.forEach((apiario) {
-      print(apiario.nome);
-      print(apiario.logradouro);
-      print(apiario.latitude);
-      print(apiario.longitude);
-      print(apiario.dataAtualizacao);
-    });
-
-    return Container();
+    return ListView.builder(
+      itemCount: apiarios.length,
+      itemBuilder: (context, index) {
+        return ApiarioTile(apiario: apiarios[index]);
+      },
+    );
   }
 }
