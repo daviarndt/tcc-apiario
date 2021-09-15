@@ -32,7 +32,9 @@ class DatabaseService {
   }
 
   Stream<List<Apiario>> get apiarios {
-    return apiarioCollection.snapshots()
+    return apiarioCollection
+      .where('criadoPor', isEqualTo: uid)
+      .snapshots()
       .map(_apiarioListFromSnapshot);
   }
 

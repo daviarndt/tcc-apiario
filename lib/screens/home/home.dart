@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/apiario.dart';
+import 'package:tcc_apiario/models/user_custom.dart';
 import 'package:tcc_apiario/screens/apiario/form_apiario.dart';
 import 'package:tcc_apiario/services/auth.dart';
 import 'package:tcc_apiario/services/database.dart';
@@ -14,10 +15,12 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserCustom>(context);
+
     return Container(
       child: StreamProvider<List<Apiario>?>.value(
         initialData: null,
-        value: DatabaseService(uid: '').apiarios,
+        value: DatabaseService(uid: user.uid).apiarios,
         child: Scaffold(
           backgroundColor: Colors.brown[50],
           appBar: AppBar(
