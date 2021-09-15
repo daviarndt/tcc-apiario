@@ -23,6 +23,17 @@ class _FormApiarioState extends State<FormApiario> {
   String longitude = '';
 
   @override
+  void setState(VoidCallback fn) {
+    if (widget.apiario != null) {
+      nome = widget.apiario!.nome;
+      logradouro = widget.apiario!.logradouro;
+      latitude = widget.apiario!.latitude;
+      longitude = widget.apiario!.longitude;
+    }
+    super.setState(fn);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserCustom>(context);
 

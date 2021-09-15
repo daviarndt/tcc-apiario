@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcc_apiario/models/apiario.dart';
+import 'package:tcc_apiario/models/caixa.dart';
 import 'package:tcc_apiario/models/user_custom.dart';
-import 'package:tcc_apiario/screens/caixa/caixa_home.dart';
-import 'package:tcc_apiario/screens/caixa/caixa_list.dart';
+import 'package:tcc_apiario/screens/caixa/form_caixa.dart';
 import 'package:tcc_apiario/services/database.dart';
-import 'form_apiario.dart';
 
-class ApiarioTile extends StatelessWidget {
-  final Apiario apiario;
+class CaixaTile extends StatelessWidget {
+  final Caixa caixa;
 
-  ApiarioTile({required this.apiario});
+  CaixaTile({ required this.caixa });
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +19,10 @@ class ApiarioTile extends StatelessWidget {
       child: Card(
         child: ListTile(
           leading: Icon(Icons.map),
-          title: Text(apiario.nome, style: TextStyle(fontSize: 24.0)),
-          subtitle: Text(apiario.logradouro, style: TextStyle(fontSize: 16.0)),
+          title: Text(caixa.numeroCaixa, style: TextStyle(fontSize: 24.0)),
+          subtitle: Text(caixa.modelo, style: TextStyle(fontSize: 16.0)),
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    CaixaHome(keyApiario: apiario.keyApiario,)));
+            // TO DO...
           },
           trailing: GestureDetector(
             child: Icon(Icons.more_vert),
@@ -38,15 +34,15 @@ class ApiarioTile extends StatelessWidget {
                       title: Text('Opções'),
                       actions: [
                         ElevatedButton(
-                            child: Text('Remover Apiário'),
+                            child: Text('Remover Caixa'),
                             onPressed: () {
                               showDialog(
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: Text('Remover Apiário?'),
+                                      title: Text('Remover Caixa?'),
                                       content: Text(
-                                          'Esta ação é irreversível. Remover o apiário também removerá todas as caixas dentro dele.'),
+                                          'Esta ação é irreversível. Tem certeza?'),
                                       actions: [
                                         TextButton(
                                             child: Text('Não'),
@@ -57,9 +53,7 @@ class ApiarioTile extends StatelessWidget {
                                         TextButton(
                                             child: Text('Sim'),
                                             onPressed: () {
-                                              DatabaseService(uid: user.uid)
-                                                  .removeApiario(
-                                                      apiario.keyApiario);
+                                              DatabaseService().removeCaixa(caixa.keyCaixa);
                                               Navigator.of(context).pop();
                                               Navigator.of(context).pop();
                                             })
@@ -73,9 +67,9 @@ class ApiarioTile extends StatelessWidget {
                             onPressed: () {
                               Navigator.of(context).pop();
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => FormApiario(
-                                        apiario: apiario,
-                                      )));
+                                  builder: (context) => FormCaixa(
+                                    caixa: caixa
+                                  )));
                             })
                       ],
                     );

@@ -3,16 +3,19 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/apiario.dart';
+import 'package:tcc_apiario/models/caixa.dart';
 import 'package:tcc_apiario/models/user_custom.dart';
-import 'package:tcc_apiario/screens/apiario/form_apiario.dart';
+import 'package:tcc_apiario/screens/caixa/caixa_list.dart';
+import 'package:tcc_apiario/screens/caixa/form_caixa.dart';
 import 'package:tcc_apiario/services/auth.dart';
 import 'package:tcc_apiario/services/database.dart';
 import 'package:tcc_apiario/shared/loading.dart';
 
-import '../apiario/apiario_list.dart';
-
-class Home extends StatelessWidget {
+class CaixaHome extends StatelessWidget {
   final AuthService _auth = AuthService();
+
+  final String? keyApiario;
+  CaixaHome({ this.keyApiario });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.brown[50],
       appBar: AppBar(
-        title: Text('Apiários'),
+        title: Text('Caixas'),
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         actions: <Widget>[
@@ -34,11 +37,11 @@ class Home extends StatelessWidget {
           ),
         ],
       ),
-      body: StreamProvider<List<Apiario>?>.value(
+      body: StreamProvider<List<Caixa>?>.value(
         initialData: null,
-        value: DatabaseService(uid: user.uid).apiarios,
-        child: StreamBuilder<List<Apiario>?>(
-            stream: DatabaseService(uid: user.uid).apiarios,
+        value: DatabaseService().getCaixas(keyApiario!),
+        child: StreamBuilder<List<Caixa>?>(
+            stream: DatabaseService().getCaixas(keyApiario!),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(
@@ -52,11 +55,11 @@ class Home extends StatelessWidget {
 
               if (snapshot.data!.length == 0) {
                 return Center(
-                  child: Text('Ainda não existem apiários cadastrados...'),
+                  child: Text('Ainda não existem caixas criadas...'),
                 );
               }
 
-              return ApiarioList();
+              return CaixaList();
             }),
       ),
       floatingActionButton: FloatingActionButton(
@@ -64,7 +67,7 @@ class Home extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => FormApiario(),
+              builder: (context) => FormCaixa(keyApiario: keyApiario),
             ),
           );
         },

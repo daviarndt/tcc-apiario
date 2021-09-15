@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tcc_apiario/models/apiario.dart';
+import 'package:tcc_apiario/models/caixa.dart';
 
 class DatabaseService {
 
-  final String uid;
-  DatabaseService({ required this.uid });
+  final String? uid;
+  DatabaseService({ this.uid });
   
   final CollectionReference usuarioCollection = FirebaseFirestore.instance.collection('usuario');
   final CollectionReference apiarioCollection = FirebaseFirestore.instance.collection('apiario');
+  final CollectionReference caixaCollection = FirebaseFirestore.instance.collection('caixa');
 
   Future createDatabaseForNewUser(String name, String email) async {
     return await usuarioCollection.doc(uid).set({
@@ -48,6 +50,29 @@ class DatabaseService {
           longitude: doc.data()['longitude'],
           dataAtualizacao: doc.data()['dataAtualizacao'],
           criadoPor: doc.data()['criadoPor']
+      );
+    }).toList();
+  }
+
+  Future removeCaixa(String doc) async {
+    return await caixaCollection.doc(doc).delete();
+  }
+
+  Stream<List<Caixa>> getCaixas(String keyApiario) {
+    return caixaCollection
+        .where('apiarioKey', isEqualTo: keyApiario)
+        .snapshots()
+        .map(_caixaListFromSnapshot);
+  }
+
+  List<Caixa> _caixaListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Caixa(
+        keyCaixa: doc.id,
+        numeroCaixa: doc.data()['numeroCaixa'],
+        modelo: doc.data()['modelo'],
+        dataAtualizacao: doc.data()['dataAtualizacao'],
+        apiarioKey: doc.data()['apiarioKey']
       );
     }).toList();
   }
