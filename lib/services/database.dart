@@ -54,13 +54,22 @@ class DatabaseService {
     }).toList();
   }
 
+  Future addCaixa(String numeroCaixa, String modelo, Timestamp dataAtualizacao, String keyApiario) async {
+    return await caixaCollection.add({
+      'numeroCaixa': numeroCaixa,
+      'modelo': modelo,
+      'dataAtualizacao': dataAtualizacao,
+      'keyApiario': keyApiario
+    });
+  }
+
   Future removeCaixa(String doc) async {
     return await caixaCollection.doc(doc).delete();
   }
 
   Stream<List<Caixa>> getCaixas(String keyApiario) {
     return caixaCollection
-        .where('apiarioKey', isEqualTo: keyApiario)
+        .where('keyApiario', isEqualTo: keyApiario)
         .snapshots()
         .map(_caixaListFromSnapshot);
   }
