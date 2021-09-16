@@ -19,6 +19,7 @@ class _FormCaixaState extends State<FormCaixa> {
   String numeroCaixa = '';
   String? modelo = 'Langstroth';
   String? tipoRainha = 'Africana';
+  String? grauSanguineo = 'F1';
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +85,23 @@ class _FormCaixaState extends State<FormCaixa> {
                 SizedBox(
                   height: 20.0,
                 ),
+                DropdownButton<String>(
+                    value: grauSanguineo,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        grauSanguineo = newValue!;
+                      });
+                    },
+                    items: <String>['F1', 'F2', 'Puro']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList()),
+                SizedBox(
+                  height: 20.0,
+                ),
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
@@ -95,7 +113,7 @@ class _FormCaixaState extends State<FormCaixa> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService().addCaixa(numeroCaixa, modelo!, tipoRainha!, Timestamp.now(), widget.keyApiario!);
+                      await DatabaseService().addCaixa(numeroCaixa, modelo!, tipoRainha!, grauSanguineo!, Timestamp.now(), widget.keyApiario!);
                       Navigator.pop(context);
                     }
                   },

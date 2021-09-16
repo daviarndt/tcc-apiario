@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/apiario.dart';
 import 'package:tcc_apiario/models/user_custom.dart';
 import 'package:tcc_apiario/screens/caixa/caixa_home.dart';
-import 'package:tcc_apiario/screens/caixa/caixa_list.dart';
 import 'package:tcc_apiario/services/database.dart';
 import 'form_apiario.dart';
 

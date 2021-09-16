@@ -15,8 +15,8 @@ class CaixaTile extends StatelessWidget {
       child: Card(
         child: ListTile(
           leading: Icon(Icons.map),
-          title: Text(caixa.numeroCaixa, style: TextStyle(fontSize: 24.0)),
-          subtitle: Text(caixa.modelo + ' - Abelha ' + caixa.tipoRainha,
+          title: Text(caixa.numeroCaixa + ' - ' + caixa.modelo, style: TextStyle(fontSize: 24.0)),
+          subtitle: Text('Abelha ' + caixa.tipoRainha + ' - ' + caixa.grauSanguineo,
               style: TextStyle(fontSize: 16.0)),
           onTap: () {
             // TO DO...

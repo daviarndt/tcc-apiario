@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/caixa.dart';
-import 'package:tcc_apiario/models/user_custom.dart';
 import 'package:tcc_apiario/screens/caixa/caixa_list.dart';
 import 'package:tcc_apiario/screens/caixa/form_caixa.dart';
 import 'package:tcc_apiario/services/auth.dart';
@@ -18,7 +15,6 @@ class CaixaHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserCustom>(context);
 
     return Scaffold(
       backgroundColor: Colors.brown[50],
