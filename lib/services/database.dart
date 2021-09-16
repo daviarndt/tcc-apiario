@@ -54,10 +54,11 @@ class DatabaseService {
     }).toList();
   }
 
-  Future addCaixa(String numeroCaixa, String modelo, Timestamp dataAtualizacao, String keyApiario) async {
+  Future addCaixa(String numeroCaixa, String modelo, String tipoRainha, Timestamp dataAtualizacao, String keyApiario) async {
     return await caixaCollection.add({
       'numeroCaixa': numeroCaixa,
       'modelo': modelo,
+      'tipoRainha': tipoRainha,
       'dataAtualizacao': dataAtualizacao,
       'keyApiario': keyApiario
     });
@@ -80,6 +81,7 @@ class DatabaseService {
         keyCaixa: doc.id,
         numeroCaixa: doc.data()['numeroCaixa'],
         modelo: doc.data()['modelo'],
+        tipoRainha: doc.data()['tipoRainha'],
         dataAtualizacao: doc.data()['dataAtualizacao'],
         apiarioKey: doc.data()['apiarioKey']
       );

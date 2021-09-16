@@ -5,6 +5,7 @@ class Caixa {
   String keyCaixa;
   String numeroCaixa;
   String modelo;
+  String tipoRainha;
   Timestamp dataAtualizacao;
   String apiarioKey;
 
@@ -12,6 +13,7 @@ class Caixa {
     required this.keyCaixa,
     required this.numeroCaixa,
     required this.modelo,
+    required this.tipoRainha,
     required this.dataAtualizacao,
     required this.apiarioKey
   });

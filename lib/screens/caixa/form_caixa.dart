@@ -18,6 +18,7 @@ class _FormCaixaState extends State<FormCaixa> {
 
   String numeroCaixa = '';
   String? modelo = 'Langstroth';
+  String? tipoRainha = 'Africana';
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class _FormCaixaState extends State<FormCaixa> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   validator: (value) => value!.isEmpty ? 'Digite o número de registro da caixa' : null,
                   onChanged: (value) {
                     setState(() {
@@ -65,6 +67,23 @@ class _FormCaixaState extends State<FormCaixa> {
                 SizedBox(
                   height: 20.0,
                 ),
+                DropdownButton<String>(
+                    value: tipoRainha,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        tipoRainha = newValue!;
+                      });
+                    },
+                    items: <String>['Africana', 'Europeia']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList()),
+                SizedBox(
+                  height: 20.0,
+                ),
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
@@ -76,7 +95,7 @@ class _FormCaixaState extends State<FormCaixa> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService().addCaixa(numeroCaixa, modelo!, Timestamp.now(), widget.keyApiario!);
+                      await DatabaseService().addCaixa(numeroCaixa, modelo!, tipoRainha!, Timestamp.now(), widget.keyApiario!);
                       Navigator.pop(context);
                     }
                   },
