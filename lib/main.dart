@@ -6,6 +6,7 @@ import 'package:tcc_apiario/models/user_custom.dart';
 import 'package:tcc_apiario/screens/wrapper.dart';
 import 'package:tcc_apiario/services/auth.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,16 @@ class ProjetoApiario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        // Locale('en', ''), // English, no country code
+        // Locale('es', ''), // Spanish, no country code
+        Locale('pt-br', '')
+      ],
       debugShowCheckedModeBanner: false,
       title: 'Splash Screen',
       home: HomePage(title: 'Splash Screen'),
@@ -58,6 +69,7 @@ Widget _introScreen() {
           child: MaterialApp(
             home: Wrapper(),
             darkTheme: ThemeData.dark(),
+            debugShowCheckedModeBanner: false,
           ),
         ),
         loaderColor: Colors.transparent,
@@ -68,7 +80,7 @@ Widget _introScreen() {
           width: 128,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/icons/honeycomb.png'),
+              image: AssetImage('assets/icons/honeycombs.png'),
               fit: BoxFit.cover,
             ),
           ),
