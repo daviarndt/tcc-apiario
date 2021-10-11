@@ -25,9 +25,9 @@ class ManutencaoHome extends StatelessWidget {
       ),
       body: StreamProvider<List<Manutencao>?>.value(
         initialData: null,
-        value: DatabaseService().getManutencoes(keyCaixa!),
+        value: DatabaseService().getManutencoes(keyCaixa),
         child: StreamBuilder<List<Manutencao>?>(
-          stream: DatabaseService().getManutencoes(keyCaixa!),
+          stream: DatabaseService().getManutencoes(keyCaixa),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(
