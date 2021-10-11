@@ -48,57 +48,81 @@ class _FormCaixaState extends State<FormCaixa> {
                   },
                   decoration: textInputDecoration.copyWith(hintText: 'Número'),
                 ),
-                SizedBox(
-                  height: 20.0,
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 16.0, 0),
+                      child: Text('Modelo: ', style: TextStyle(fontSize: 16.0),),
+                    ),
+                    DropdownButton<String>(
+                        value: modelo,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            modelo = newValue!;
+                          });
+                        },
+                        items: <String>['Langstroth', 'Cortinaz', 'Schenk']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList()),
+                  ],
                 ),
-                DropdownButton<String>(
-                    value: modelo,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        modelo = newValue!;
-                      });
-                    },
-                    items: <String>['Langstroth', 'Cortinaz', 'Schenk']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList()),
-                SizedBox(
-                  height: 20.0,
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 16.0, 0),
+                      child: Text('Tipo da Rainha: ', style: TextStyle(fontSize: 16.0),),
+                    ),
+                    DropdownButton<String>(
+                        value: tipoRainha,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            tipoRainha = newValue!;
+                          });
+                        },
+                        items: <String>['Africana', 'Europeia']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList()),
+                  ],
                 ),
-                DropdownButton<String>(
-                    value: tipoRainha,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        tipoRainha = newValue!;
-                      });
-                    },
-                    items: <String>['Africana', 'Europeia']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList()),
-                SizedBox(
-                  height: 20.0,
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 16.0, 0),
+                      child: Text('Grau Sanguíneo: ', style: TextStyle(fontSize: 16.0),),
+                    ),
+                    DropdownButton<String>(
+                        value: grauSanguineo,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            grauSanguineo = newValue!;
+                          });
+                        },
+                        items: <String>['F1', 'F2', 'Puro']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList()),
+                  ],
                 ),
-                DropdownButton<String>(
-                    value: grauSanguineo,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        grauSanguineo = newValue!;
-                      });
-                    },
-                    items: <String>['F1', 'F2', 'Puro']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList()),
                 SizedBox(
                   height: 20.0,
                 ),
