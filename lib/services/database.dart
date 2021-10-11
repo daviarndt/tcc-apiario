@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tcc_apiario/models/apiario.dart';
 import 'package:tcc_apiario/models/caixa.dart';
+import 'package:tcc_apiario/models/manutencao.dart';
 
 class DatabaseService {
 
@@ -10,6 +11,7 @@ class DatabaseService {
   final CollectionReference usuarioCollection = FirebaseFirestore.instance.collection('usuario');
   final CollectionReference apiarioCollection = FirebaseFirestore.instance.collection('apiario');
   final CollectionReference caixaCollection = FirebaseFirestore.instance.collection('caixa');
+  final CollectionReference manutencaoCollection = FirebaseFirestore.instance.collection('manutencao');
 
   Future createDatabaseForNewUser(String name, String email) async {
     return await usuarioCollection.doc(uid).set({
@@ -89,4 +91,33 @@ class DatabaseService {
     }).toList();
   }
 
+  Future addManutencao(String descricao, Timestamp dataManutencao, String keyCaixa) async {
+    return await manutencaoCollection.add({
+      'descricao': descricao,
+      'dataManutencao': dataManutencao,
+      'keyCaixa': keyCaixa,
+    });
+  }
+
+  Future removeManutencao(String doc) async {
+    return await manutencaoCollection.doc(doc).delete();
+  }
+
+  Stream<List<Manutencao>> getManutencoes(String keyCaixa) {
+    return manutencaoCollection
+        .where('caixaKey', isEqualTo: keyCaixa)
+        .snapshots()
+        .map(_manutencaoListFromSnapshot);
+  }
+
+  List<Manutencao> _manutencaoListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Manutencao(
+        keyManutencao: doc.id,
+        descricao: doc.data()['descricao'],
+        dataManutencao: doc.data()['dataManutencao'],
+        caixaKey: doc.data()['caixaKey']
+      );
+    }).toList();
+  }
 }

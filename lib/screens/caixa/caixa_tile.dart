@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tcc_apiario/models/caixa.dart';
 import 'package:tcc_apiario/screens/caixa/form_caixa.dart';
+import 'package:tcc_apiario/screens/manutencao/manutencao_home.dart';
 import 'package:tcc_apiario/services/database.dart';
 
 class CaixaTile extends StatelessWidget {
@@ -19,7 +20,9 @@ class CaixaTile extends StatelessWidget {
           subtitle: Text('Abelha ' + caixa.tipoRainha + ' - ' + caixa.grauSanguineo,
               style: TextStyle(fontSize: 16.0)),
           onTap: () {
-            // TO DO...
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    ManutencaoHome(keyCaixa: caixa.keyCaixa, caixaNumero: caixa.numeroCaixa)));
           },
           trailing: GestureDetector(
             child: Icon(Icons.more_vert),

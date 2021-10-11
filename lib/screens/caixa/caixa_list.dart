@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/caixa.dart';
-
 import 'caixa_tile.dart';
 
 class CaixaList extends StatefulWidget {
