@@ -15,7 +15,13 @@ class CaixaTile extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         child: ListTile(
-          leading: Icon(Icons.map),
+          leading: Container(
+            width: 40.0,
+            height: 40.0,
+            decoration: BoxDecoration(
+              image: DecorationImage(fit: BoxFit.cover, image: AssetImage('assets/icons/bee-box.png'))
+            ),
+          ),
           title: Text(caixa.numeroCaixa + ' - ' + caixa.modelo, style: TextStyle(fontSize: 24.0)),
           subtitle: Text('Abelha ' + caixa.tipoRainha + ' - ' + caixa.grauSanguineo,
               style: TextStyle(fontSize: 16.0)),

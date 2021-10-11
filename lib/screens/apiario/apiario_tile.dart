@@ -19,7 +19,13 @@ class ApiarioTile extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         child: ListTile(
-          leading: Icon(Icons.map),
+          leading: Container(
+            width: 40.0,
+            height: 40.0,
+            decoration: BoxDecoration(
+                image: DecorationImage(fit: BoxFit.cover, image: AssetImage('assets/icons/bee-hive.png'))
+            ),
+          ),
           title: Text(apiario.nome, style: TextStyle(fontSize: 24.0)),
           subtitle: Text(apiario.logradouro, style: TextStyle(fontSize: 16.0)),
           onTap: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcc_apiario/models/manutencao.dart';
+import 'package:intl/intl.dart';
 
 class ManutencaoTile extends StatelessWidget {
   final Manutencao manutencao;
@@ -13,7 +14,7 @@ class ManutencaoTile extends StatelessWidget {
       child: Card(
         child: ListTile(
           leading: Icon(Icons.assignment_outlined),
-          title: Text(manutencao.dataManutencao.toString()),
+          title: Text(DateFormat('dd/MM/yyyy').format(manutencao.dataManutencao.toDate())),
           subtitle: Text(manutencao.descricao),
         ),
       ),
