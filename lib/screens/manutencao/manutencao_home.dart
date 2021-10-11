@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/manutencao.dart';
+import 'package:tcc_apiario/screens/manutencao/form_manutencao.dart';
 import 'package:tcc_apiario/services/database.dart';
 import 'package:tcc_apiario/shared/loading.dart';
 
@@ -47,7 +48,16 @@ class ManutencaoHome extends StatelessWidget {
               return ManutencaoList();
             }),
       ),
-
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => FormManutencao(keyCaixa: keyCaixa),
+            ),
+          );
+        },
+      ),
     );
   }
 }

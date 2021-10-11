@@ -105,7 +105,7 @@ class DatabaseService {
 
   Stream<List<Manutencao>> getManutencoes(String keyCaixa) {
     return manutencaoCollection
-        .where('caixaKey', isEqualTo: keyCaixa)
+        .where('keyCaixa', isEqualTo: keyCaixa)
         .snapshots()
         .map(_manutencaoListFromSnapshot);
   }
