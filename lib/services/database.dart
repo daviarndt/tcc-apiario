@@ -80,6 +80,18 @@ class DatabaseService {
     });
   }
 
+  Future updateCaixa(String doc, String numeroCaixa, String modelo, String tipoRainha, String grauSanguineo, Timestamp dataAtualizacao) async {
+    return await caixaCollection
+        .doc(doc)
+        .update({
+      'numeroCaixa': numeroCaixa,
+      'modelo': modelo,
+      'grauSanguineo': grauSanguineo,
+      'tipoRainha': tipoRainha,
+      'dataAtualizacao': dataAtualizacao,
+    });
+  }
+
   Future removeCaixa(String doc) async {
     return await caixaCollection.doc(doc).delete();
   }

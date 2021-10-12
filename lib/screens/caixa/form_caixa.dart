@@ -14,18 +14,33 @@ class FormCaixa extends StatefulWidget {
 }
 
 class _FormCaixaState extends State<FormCaixa> {
-  final _formKey = GlobalKey<FormState>();
-
   String numeroCaixa = '';
   String? modelo = 'Langstroth';
   String? tipoRainha = 'Africana';
   String? grauSanguineo = 'F1';
 
+  final _formKey = GlobalKey<FormState>();
+
+  final _numeroCaixaController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.caixa != null) {
+      _numeroCaixaController.text = widget.caixa!.numeroCaixa;
+      numeroCaixa = widget.caixa!.numeroCaixa;
+      modelo = widget.caixa!.modelo;
+      tipoRainha = widget.caixa!.tipoRainha;
+      grauSanguineo = widget.caixa!.grauSanguineo;
+    }
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar Caixa'),
+        title: Text(widget.caixa != null ? 'Editar Caixa: ' + widget.caixa!.numeroCaixa : 'Cadastrar Caixa'),
         backgroundColor: Color(0xFFCF5C36),
         elevation: 0.0,
       ),
@@ -39,6 +54,7 @@ class _FormCaixaState extends State<FormCaixa> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  controller: _numeroCaixaController,
                   keyboardType: TextInputType.number,
                   validator: (value) => value!.isEmpty ? 'Digite o número de registro da caixa' : null,
                   onChanged: (value) {
@@ -137,8 +153,23 @@ class _FormCaixaState extends State<FormCaixa> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService().addCaixa(numeroCaixa, modelo!, tipoRainha!, grauSanguineo!, Timestamp.now(), widget.keyApiario!);
-                      Navigator.pop(context);
+                      if (widget.caixa == null){
+                        await DatabaseService().addCaixa(numeroCaixa, modelo!, tipoRainha!, grauSanguineo!, Timestamp.now(), widget.keyApiario!);
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text('Caixa Cadastrada')
+                            )
+                        );
+                      } else {
+                        await DatabaseService().updateCaixa(widget.caixa!.keyCaixa, numeroCaixa, modelo!, tipoRainha!, grauSanguineo!, Timestamp.now());
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text('Caixa Editada')
+                            )
+                        );
+                      }
                     }
                   },
                 ),
