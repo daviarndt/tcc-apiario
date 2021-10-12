@@ -1,45 +1,51 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tcc_apiario/models/apiario.dart';
-import 'package:tcc_apiario/models/user_custom.dart';
 import 'package:tcc_apiario/services/database.dart';
 import 'package:tcc_apiario/shared/constants.dart';
 
 class FormApiario extends StatefulWidget {
   final Apiario? apiario;
-  FormApiario({ this.apiario });
+  final String userId;
+  FormApiario({ this.apiario, required this.userId });
 
   @override
   _FormApiarioState createState() => _FormApiarioState();
 }
 
 class _FormApiarioState extends State<FormApiario> {
-  final _formKey = GlobalKey<FormState>();
-
   String nome = '';
   String logradouro = '';
   String latitude = '';
   String longitude = '';
 
+  final _formKey = GlobalKey<FormState>();
+
+  final _nomeController = TextEditingController();
+  final _logradouroController = TextEditingController();
+  final _latitudeController = TextEditingController();
+  final _longitudeController = TextEditingController();
+
   @override
-  void setState(VoidCallback fn) {
+  void initState() {
     if (widget.apiario != null) {
+      _nomeController.text = widget.apiario!.nome;
       nome = widget.apiario!.nome;
+      _logradouroController.text = widget.apiario!.logradouro;
       logradouro = widget.apiario!.logradouro;
+      _latitudeController.text = widget.apiario!.latitude;
       latitude = widget.apiario!.latitude;
+      _longitudeController.text = widget.apiario!.longitude;
       longitude = widget.apiario!.longitude;
     }
-    super.setState(fn);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserCustom>(context);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar Apiário'),
+        title: Text(widget.apiario != null ? 'Editar Apiário: ' + widget.apiario!.nome : 'Cadastrar Apiário'),
         backgroundColor: Color(0xFFCF5C36),
         elevation: 0.0,
       ),
@@ -53,6 +59,7 @@ class _FormApiarioState extends State<FormApiario> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  controller: _nomeController,
                   validator: (value) => value!.isEmpty ? 'Digite o nome' : null,
                   onChanged: (value) {
                     setState(() {
@@ -65,6 +72,7 @@ class _FormApiarioState extends State<FormApiario> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  controller: _logradouroController,
                   validator: (value) =>
                   value!.isEmpty ? 'Digite o logradouro' : null,
                   onChanged: (value) {
@@ -78,6 +86,8 @@ class _FormApiarioState extends State<FormApiario> {
                   height: 20.0,
                 ),
                 TextFormField(
+                    keyboardType: TextInputType.number,
+                  controller: _latitudeController,
                   validator: (value) =>
                   value!.isEmpty ? 'Digite a latitude' : null,
                   onChanged: (value) {
@@ -91,6 +101,8 @@ class _FormApiarioState extends State<FormApiario> {
                   height: 20.0,
                 ),
                 TextFormField(
+                    keyboardType: TextInputType.number,
+                  controller: _longitudeController,
                   validator: (value) =>
                   value!.isEmpty ? 'Digite a longitude' : null,
                   onChanged: (value) {
@@ -114,8 +126,23 @@ class _FormApiarioState extends State<FormApiario> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService(uid: user.uid).addApiario(nome, logradouro, latitude, longitude, Timestamp.now(), user.uid);
-                      Navigator.pop(context);
+                      if (widget.apiario == null){
+                        await DatabaseService().addApiario(nome, logradouro, latitude, longitude, Timestamp.now(), widget.userId);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text('Apiário Cadastrado')
+                            )
+                        );
+                        Navigator.pop(context);
+                      } else {
+                        await DatabaseService().updateApiario(widget.apiario!.keyApiario, nome, logradouro, latitude, longitude, Timestamp.now(), widget.userId);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text('Apiário Editado')
+                            )
+                        );
+                        Navigator.pop(context);
+                      }
                     }
                   },
                 ),

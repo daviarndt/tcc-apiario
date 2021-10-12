@@ -31,6 +31,19 @@ class DatabaseService {
     });
   }
 
+  Future updateApiario(String doc, String nome, String logradouro, String latitude, String longitude, Timestamp dataAtualizacao, String criadoPor) async {
+    return await apiarioCollection
+        .doc(doc)
+        .update({
+      'nome': nome,
+      'logradouro': logradouro,
+      'latitude': latitude,
+      'longitude': longitude,
+      'dataAtualizacao': dataAtualizacao,
+      'criadoPor': criadoPor
+    });
+  }
+
   Future removeApiario(String doc) async {
     return await apiarioCollection.doc(doc).delete();
   }

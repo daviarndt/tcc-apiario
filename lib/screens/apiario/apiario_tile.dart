@@ -62,7 +62,7 @@ class ApiarioTile extends StatelessWidget {
                                         TextButton(
                                             child: Text('Sim'),
                                             onPressed: () {
-                                              DatabaseService(uid: user.uid)
+                                              DatabaseService()
                                                   .removeApiario(
                                                       apiario.keyApiario);
                                               Navigator.of(context).pop();
@@ -79,7 +79,7 @@ class ApiarioTile extends StatelessWidget {
                               Navigator.of(context).pop();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => FormApiario(
-                                        apiario: apiario,
+                                        apiario: apiario, userId: user.uid,
                                       )));
                             })
                       ],

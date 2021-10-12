@@ -62,7 +62,7 @@ class Home extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => FormApiario(),
+              builder: (context) => FormApiario(userId: user.uid),
             ),
           );
         },
