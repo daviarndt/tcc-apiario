@@ -128,20 +128,20 @@ class _FormApiarioState extends State<FormApiario> {
                     if (_formKey.currentState!.validate()) {
                       if (widget.apiario == null){
                         await DatabaseService().addApiario(nome, logradouro, latitude, longitude, Timestamp.now(), widget.userId);
+                        Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                                 content: Text('Apiário Cadastrado')
                             )
                         );
-                        Navigator.pop(context);
                       } else {
                         await DatabaseService().updateApiario(widget.apiario!.keyApiario, nome, logradouro, latitude, longitude, Timestamp.now(), widget.userId);
+                        Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                                 content: Text('Apiário Editado')
                             )
                         );
-                        Navigator.pop(context);
                       }
                     }
                   },
