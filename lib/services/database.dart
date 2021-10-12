@@ -124,6 +124,14 @@ class DatabaseService {
     });
   }
 
+  Future updateManutencao(String doc, String descricao, Timestamp dataManutencao) async {
+    return await manutencaoCollection.doc(doc)
+        .update({
+      'descricao': descricao,
+      'dataManutencao': dataManutencao,
+    });
+  }
+
   Future removeManutencao(String doc) async {
     return await manutencaoCollection.doc(doc).delete();
   }

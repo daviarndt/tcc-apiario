@@ -58,7 +58,7 @@ class ManutencaoTile extends StatelessWidget {
                                   });
                             }),
                         ElevatedButton(
-                            child: Text('Editar Caixa'),
+                            child: Text('Editar Manutenção'),
                             // TO DO
                             onPressed: () {
                               Navigator.of(context).pop();

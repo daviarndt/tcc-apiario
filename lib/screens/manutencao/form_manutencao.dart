@@ -16,12 +16,23 @@ class FormManutencao extends StatefulWidget {
 }
 
 class _FormManutencaoState extends State<FormManutencao> {
-  final _formKey = GlobalKey<FormState>();
-
-  final DateRangePickerController _controller = DateRangePickerController();
+  final DateRangePickerController _dateRangePickerController = DateRangePickerController();
   DateTime dataManutencaoPicker = DateTime.now();
   String descricao = '';
-  
+
+  final _descricaoController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.manutencao != null) {
+      _descricaoController.text = widget.manutencao!.descricao;
+      descricao = widget.manutencao!.descricao;
+      _dateRangePickerController.selectedDate = widget.manutencao!.dataManutencao.toDate();
+      dataManutencaoPicker = widget.manutencao!.dataManutencao.toDate();
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +54,8 @@ class _FormManutencaoState extends State<FormManutencao> {
                 height: 8.0,
               ),
               SfDateRangePicker(
-                controller: _controller,
-                initialSelectedDate: DateTime.now(),
+                controller: _dateRangePickerController,
+                initialSelectedDate: dataManutencaoPicker,
                 view: DateRangePickerView.month,
                 onSelectionChanged: _onSelectionChanged,
                 selectionMode: DateRangePickerSelectionMode.single,
@@ -57,6 +68,7 @@ class _FormManutencaoState extends State<FormManutencao> {
                 height: 8.0,
               ),
               TextFormField(
+                controller: _descricaoController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 validator: (value) => value!.isEmpty ? 'Digite a descrição da manutenção...' : null,
@@ -87,8 +99,23 @@ class _FormManutencaoState extends State<FormManutencao> {
                         )
                       );
                     } else {
-                      await DatabaseService().addManutencao(descricao, Timestamp.fromDate(dataManutencaoPicker), widget.keyCaixa!);
-                      Navigator.pop(context);
+                      if (widget.manutencao == null) {
+                        await DatabaseService().addManutencao(descricao, Timestamp.fromDate(dataManutencaoPicker), widget.keyCaixa!);
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text('Manutenção Cadastrada')
+                            )
+                        );
+                      } else {
+                        await DatabaseService().updateManutencao(widget.manutencao!.keyManutencao, descricao, Timestamp.fromDate(dataManutencaoPicker));
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text('Manutenção Editada')
+                            )
+                        );
+                      }
                     }
                 },
               ),
