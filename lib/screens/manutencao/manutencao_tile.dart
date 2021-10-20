@@ -18,7 +18,7 @@ class ManutencaoTile extends StatelessWidget {
         child: ListTile(
           leading: Icon(Icons.assignment_outlined, size: 40.0,),
           title: Text(DateFormat('dd/MM/yyyy').format(manutencao.dataManutencao.toDate())),
-          subtitle: Text(manutencao.descricao),
+          subtitle: Text(manutencao.descricao, maxLines: 1, overflow: TextOverflow.ellipsis,),
           trailing: GestureDetector(
             child: Icon(Icons.more_vert),
             onTap: () {
