@@ -139,6 +139,7 @@ class DatabaseService {
   Stream<List<Manutencao>> getManutencoes(String keyCaixa) {
     return manutencaoCollection
         .where('keyCaixa', isEqualTo: keyCaixa)
+        .orderBy('dataManutencao', descending: true)
         .snapshots()
         .map(_manutencaoListFromSnapshot);
   }
