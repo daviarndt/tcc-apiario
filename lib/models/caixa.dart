@@ -9,6 +9,9 @@ class Caixa {
   String grauSanguineo;
   Timestamp dataAtualizacao;
   String apiarioKey;
+  String nomeFornecedor;
+  String emailFornecedor;
+  String telefoneFornecedor;
 
   Caixa({
     required this.keyCaixa,
@@ -17,6 +20,9 @@ class Caixa {
     required this.grauSanguineo,
     required this.tipoRainha,
     required this.dataAtualizacao,
-    required this.apiarioKey
+    required this.apiarioKey,
+    required this.nomeFornecedor,
+    required this.emailFornecedor,
+    required this.telefoneFornecedor
   });
 }

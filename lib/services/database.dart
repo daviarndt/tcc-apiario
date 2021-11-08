@@ -69,18 +69,21 @@ class DatabaseService {
     }).toList();
   }
 
-  Future addCaixa(String numeroCaixa, String modelo, String tipoRainha, String grauSanguineo, Timestamp dataAtualizacao, String keyApiario) async {
+  Future addCaixa(String numeroCaixa, String modelo, String tipoRainha, String grauSanguineo, Timestamp dataAtualizacao, String keyApiario, String nomeFornecedor, String emailFornecedor, String telefoneFornecedor) async {
     return await caixaCollection.add({
       'numeroCaixa': numeroCaixa,
       'modelo': modelo,
       'grauSanguineo': grauSanguineo,
       'tipoRainha': tipoRainha,
       'dataAtualizacao': dataAtualizacao,
-      'keyApiario': keyApiario
+      'keyApiario': keyApiario,
+      'nomeFornecedor': nomeFornecedor,
+      'emailFornecedor': emailFornecedor,
+      'telefoneFornecedor': telefoneFornecedor
     });
   }
 
-  Future updateCaixa(String doc, String numeroCaixa, String modelo, String tipoRainha, String grauSanguineo, Timestamp dataAtualizacao) async {
+  Future updateCaixa(String doc, String numeroCaixa, String modelo, String tipoRainha, String grauSanguineo, Timestamp dataAtualizacao, String nomeFornecedor, String emailFornecedor, String telefoneFornecedor) async {
     return await caixaCollection
         .doc(doc)
         .update({
@@ -89,6 +92,9 @@ class DatabaseService {
       'grauSanguineo': grauSanguineo,
       'tipoRainha': tipoRainha,
       'dataAtualizacao': dataAtualizacao,
+      'nomeFornecedor': nomeFornecedor,
+      'emailFornecedor': emailFornecedor,
+      'telefoneFornecedor': telefoneFornecedor
     });
   }
 
@@ -111,7 +117,10 @@ class DatabaseService {
         modelo: doc.data()['modelo'], grauSanguineo: doc.data()['grauSanguineo'],
         tipoRainha: doc.data()['tipoRainha'],
         dataAtualizacao: doc.data()['dataAtualizacao'],
-        apiarioKey: doc.data()['apiarioKey']
+        apiarioKey: doc.data()['apiarioKey'],
+        nomeFornecedor: doc.data()['nomeFornecedor'],
+        emailFornecedor: doc.data()['emailFornecedor'],
+        telefoneFornecedor: doc.data()['telefoneFornecedor']
       );
     }).toList();
   }
@@ -140,6 +149,7 @@ class DatabaseService {
     return manutencaoCollection
         .where('keyCaixa', isEqualTo: keyCaixa)
         .orderBy('dataManutencao', descending: true)
+        // .limit(10)
         .snapshots()
         .map(_manutencaoListFromSnapshot);
   }
